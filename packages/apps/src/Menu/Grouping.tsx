@@ -13,15 +13,19 @@ import Item from './Item';
 
 interface Props extends Group {
   className?: string;
+  isActive: boolean;
 }
 
 const SHA_COL = 'rgba(34, 36, 38, 0.12)';
 const SHA_OFF = '5px';
 
-function Grouping ({ className = '', name, routes }: Props): React.ReactElement<Props> {
+function Grouping ({ className = '', isActive, name, routes }: Props): React.ReactElement<Props> {
+  console.log(isActive, name);
+
   if (routes.length === 1) {
     return (
       <Item
+        className={isActive ? 'isActive' : ''}
         isToplevel
         route={routes[0]}
       />
@@ -29,8 +33,8 @@ function Grouping ({ className = '', name, routes }: Props): React.ReactElement<
   }
 
   return (
-    <li className={className}>
-      <div className='groupHdr highlight--color-contrast'>
+    <li className={`${className} ${isActive ? 'isActive' : ''}`}>
+      <div className={`groupHdr ${!isActive ? 'highlight--color-contrast' : ''}`}>
         <span>{name}</span>
         <Icon icon='caret-down' />
       </div>
@@ -49,14 +53,25 @@ function Grouping ({ className = '', name, routes }: Props): React.ReactElement<
 export default React.memo(styled(Grouping)(({ theme }: ThemeProps) => `
   cursor: pointer;
   position: relative;
+  margin-bottom: -5px;
 
   .groupHdr {
-    border-radius: 0.25rem 0.25rem 0 0;
-    padding: 1rem 1.25rem 1rem 1.5rem;
+    border-radius: 0.15rem 0.15rem 0 0;
+    padding: 1rem 1.15rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6rem;
 
     > .ui--Icon {
       margin-left: 0.75rem;
     }
+  }
+
+  &.isActive .groupHdr {
+    background-color: ${theme.bgTabs};
+    color: ${theme.color};
+    font-size: 1rem;
+    font-weight: 500;
   }
 
   .groupMenu {

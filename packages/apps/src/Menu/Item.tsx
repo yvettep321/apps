@@ -7,6 +7,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Badge, Icon } from '@polkadot/react-components';
+import { ThemeProps } from '@polkadot/react-components/types';
 import { useToggle } from '@polkadot/react-hooks';
 
 interface Props {
@@ -33,7 +34,7 @@ function Item ({ className = '', isToplevel, route: { Modal, href, icon, name, t
         {text}
         {!!count && (
           <Badge
-            color={isToplevel ? 'counterInvert' : 'counter'}
+            color='counter'
             info={count}
           />
         )}
@@ -45,20 +46,29 @@ function Item ({ className = '', isToplevel, route: { Modal, href, icon, name, t
   );
 }
 
-export default React.memo(styled(Item)`
+export default React.memo(styled(Item)(({ theme } : ThemeProps) => `
   cursor: pointer;
   position: relative;
   white-space: nowrap;
 
   &.topLevel {
-    padding: 0;
-
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    border-radius: 0.15rem 0.15rem 0 0;
     a {
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.15rem 1.25rem;
+    }
+    &:hover {
+      background-color: ${theme.bgMenu};
+      color: ${theme.color};
     }
 
-    .ui--Badge {
-      top: 0.95rem;
+    &.isActive.highlight--color-contrast {
+      background-color: ${theme.bgTabs};
+      color: ${theme.color};
+      font-size: 1.15rem;
+      font-weight: 600;
     }
   }
 
@@ -69,17 +79,19 @@ export default React.memo(styled(Item)`
   a {
     color: inherit !important;
     display: block;
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1.15rem 0.57rem;
     text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .ui--Badge {
     position: absolute;
     right: 0.25rem;
-    top: 0.7rem;
   }
 
   .ui--Icon {
     margin-right: 0.5rem;
   }
-`);
+`));
