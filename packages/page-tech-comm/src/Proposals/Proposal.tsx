@@ -98,7 +98,9 @@ function Proposal ({ className = '', imageHash, members, prime }: Props): React.
             hash={imageHash}
             members={members}
             prime={prime}
+            proposal={proposal}
             proposalId={index}
+            votes={votes}
           />
         )}
         {isCloseable && (

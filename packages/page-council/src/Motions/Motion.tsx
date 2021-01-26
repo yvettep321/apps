@@ -108,6 +108,7 @@ function Motion ({ className = '', isMember, members, motion: { hash, proposal, 
             members={members}
             prime={prime}
             proposal={proposal}
+            votes={votes}
           />
         )}
         {isCloseable && (
